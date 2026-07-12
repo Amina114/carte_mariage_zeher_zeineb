@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Invitation au mariage de Zeher Ben Hmida et Zeineb Chabchoub" />
+  <title>Mariage de Zeher & Zeineb</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+  <main class="page">
+    <article class="card">
+      <div class="flower flower-1" aria-hidden="true">✦</div>
+      <div class="flower flower-2" aria-hidden="true">✦</div>
+
+      <p class="small-title">Invitation au mariage</p>
+
+      <h1>
+        <span>Zeher Ben Hmida</span>
+        <span class="ampersand">&</span>
+        <span>Zeineb Chabchoub</span>
+      </h1>
+
+      <div class="divider" aria-hidden="true">
+        <span></span>
+        <p>♥</p>
+        <span></span>
+      </div>
+
+      <figure class="couple-photo">
+        <img src="couple.jpg" alt="Photo du couple" />
+      </figure>
+
+      <p class="intro-text">
+        Ont le plaisir de vous annoncer leur mariage et seraient honorés de votre présence
+        pour partager avec eux ces heureux moments.
+      </p>
+
+      <section class="event-card" data-event-key="traditional" aria-labelledby="traditional-title">
+        <p class="event-label">Célébration traditionnelle</p>
+        <h2 id="traditional-title">Vendredi 21 août 2026</h2>
+        <p class="event-description">
+          Une après-midi de célébration traditionnelle aura lieu à
+          <strong>L’Opera Palace, à Sfax</strong>.
+        </p>
+        <p class="response-summary">Réponses reçues : <span class="count-yes">0</span> confirmés, <span class="count-maybe">0</span> peut-être.</p>
+
+        <p class="map-line">
+          <a
+            class="map-link"
+            href="https://maps.app.goo.gl/dsiRPzt2pvZSNUEY9?g_st=ic"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            📍 Voir le lieu sur Google Maps
+          </a>
+        </p>
+
+        <div class="actions">
+          <button
+            class="rsvp-btn"
+            type="button"
+            data-event="la célébration traditionnelle du 21 août"
+            data-response="yes"
+          >
+            Je participe
+          </button>
+
+          <button
+            class="rsvp-btn secondary"
+            type="button"
+            data-event="la célébration traditionnelle du 21 août"
+            data-response="maybe"
+          >
+            Peut-être
+          </button>
+        </div>
+
+        <p class="thank-you" aria-live="polite"></p>
+      </section>
+
+      <section class="event-card" data-event-key="ceremony" aria-labelledby="ceremony-title">
+        <p class="event-label">Cérémonie de mariage</p>
+        <h2 id="ceremony-title">Lundi 24 août 2026 à 17 h</h2>
+        <p class="event-description">
+          La cérémonie de mariage sera célébrée à la
+          <strong>Municipalité de la Kasbah, à Tunis</strong>.
+        </p>
+        <p class="response-summary">Réponses reçues : <span class="count-yes">0</span> confirmés, <span class="count-maybe">0</span> peut-être.</p>
+
+        <div class="actions">
+          <button
+            class="rsvp-btn"
+            type="button"
+            data-event="la cérémonie de mariage du 24 août"
+            data-response="yes"
+          >
+            Je participe
+          </button>
+
+          <button
+            class="rsvp-btn secondary"
+            type="button"
+            data-event="la cérémonie de mariage du 24 août"
+            data-response="maybe"
+          >
+            Peut-être
+          </button>
+        </div>
+
+        <p class="thank-you" aria-live="polite"></p>
+      </section>
+
+      <section class="countdown-section" aria-label="Compte à rebours avant la cérémonie">
+        <p class="countdown-title">La cérémonie commence dans</p>
+
+        <div class="countdown">
+          <div>
+            <span id="days">00</span>
+            <p>Jours</p>
+          </div>
+          <div>
+            <span id="hours">00</span>
+            <p>Heures</p>
+          </div>
+          <div>
+            <span id="minutes">00</span>
+            <p>Minutes</p>
+          </div>
+          <div>
+            <span id="seconds">00</span>
+            <p>Secondes</p>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
