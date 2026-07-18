@@ -61,6 +61,11 @@ const responseData =
     ceremony: { yes: 0, maybe: 0, answered: null },
   };
 
+const calendarLinks = {
+  traditional: "https://calendar.app.google/QpLChc7DAzPsKYrd9",
+  ceremony: "https://calendar.app.google/9112EA7KT1rBHtuL6",
+};
+
 function updateResponseSummary(eventCard, key) {
   const summary = eventCard.querySelector(".response-summary");
   const counts = responseData[key];
@@ -143,6 +148,11 @@ document.querySelectorAll(".rsvp-btn").forEach((button) => {
       responseData[eventKey].maybe += 1;
       responseData[eventKey].answered = "maybe";
       thankYou.textContent = `Merci pour votre réponse. ${responseData[eventKey].maybe} personnes ont répondu « peut-être » pour ${eventName}.`;
+    }
+
+    const calendarUrl = calendarLinks[eventKey];
+    if (calendarUrl) {
+      window.open(calendarUrl, "_blank", "noopener,noreferrer");
     }
 
     saveResponseData(responseData);
