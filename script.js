@@ -85,29 +85,6 @@ function restoreResponseState() {
     }
 
     updateResponseSummary(eventCard, key);
-
-    if (counts.answered) {
-      const responseButtons = eventCard.querySelectorAll(".rsvp-btn");
-      const thankYou = eventCard.querySelector(".thank-you");
-      const eventName = eventCard.querySelector(".event-label").textContent;
-
-      responseButtons.forEach((button) => {
-        button.disabled = true;
-        if (button.dataset.response === counts.answered) {
-          button.textContent =
-            counts.answered === "yes"
-              ? "Participation confirmée ✓"
-              : "Réponse enregistrée ✓";
-        }
-      });
-
-      if (counts.answered === "yes") {
-        thankYou.textContent = `Merci ! Votre participation à ${eventName} est bien prise en compte. ${counts.yes} personnes ont déjà confirmé.`;
-      } else {
-        thankYou.textContent = `Merci pour votre réponse. ${counts.maybe} personnes ont répondu « peut-être ».`;
-      }
-      thankYou.style.display = "block";
-    }
   });
 }
 
