@@ -161,7 +161,6 @@ document.querySelectorAll(".rsvp-btn").forEach((button) => {
     responseButtons.forEach((item) => {
       item.disabled = true;
     });
-    button.textContent = response === "yes" ? "Participation confirmée ✓" : "Réponse enregistrée ✓";
   });
 });
 
