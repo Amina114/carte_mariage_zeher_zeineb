@@ -35,61 +35,6 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-const storageKey = "weddingResponseData";
-
-function loadResponseData() {
-  const stored = localStorage.getItem(storageKey);
-
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch (error) {
-      return null;
-    }
-  }
-
-  return null;
-}
-
-function saveResponseData(data) {
-  localStorage.setItem(storageKey, JSON.stringify(data));
-}
-
-const responseData =
-  loadResponseData() || {
-    traditional: { yes: 0, maybe: 0, answered: null },
-    ceremony: { yes: 0, maybe: 0, answered: null },
-  };
-
-const calendarLinks = {
-  traditional: "https://calendar.app.google/QpLChc7DAzPsKYrd9",
-  ceremony: "https://calendar.app.google/9112EA7KT1rBHtuL6",
-};
-
-function updateResponseSummary(eventCard, key) {
-  const summary = eventCard.querySelector(".response-summary");
-  const counts = responseData[key];
-
-  if (summary && counts) {
-    summary.innerHTML = `Réponses reçues : <span class="count-yes">${counts.yes}</span> confirmés, <span class="count-maybe">${counts.maybe}</span> peut-être.`;
-  }
-}
-
-function restoreResponseState() {
-  document.querySelectorAll(".event-card").forEach((eventCard) => {
-    const key = eventCard.dataset.eventKey;
-    const counts = responseData[key];
-
-    if (!counts) {
-      return;
-    }
-
-    updateResponseSummary(eventCard, key);
-  });
-}
-
-restoreResponseState();
-
 // Cœurs flottants.
 function createHeart() {
   const heart = document.createElement("div");
@@ -110,31 +55,29 @@ setInterval(createHeart, 700);
 document.querySelectorAll(".rsvp-btn").forEach((button) => {
   button.addEventListener("click", () => {
     const eventName = button.dataset.event;
-    const response = button.dataset.response;
     const eventCard = button.closest(".event-card");
-    const eventKey = eventCard.dataset.eventKey || eventName.toLowerCase().replace(/\s+/g, "-");
+    const eventKey = eventCard.dataset.eventKey;
     const thankYou = eventCard.querySelector(".thank-you");
     const responseButtons = eventCard.querySelectorAll(".rsvp-btn");
 
-    if (response === "yes") {
-      responseData[eventKey].yes += 1;
-      responseData[eventKey].answered = "yes";
-      thankYou.textContent = `Merci ! Votre participation à ${eventName} est bien prise en compte. ${responseData[eventKey].yes} personnes ont déjà confirmé.`;
-      launchConfetti();
-    } else {
-      responseData[eventKey].maybe += 1;
-      responseData[eventKey].answered = "maybe";
-      thankYou.textContent = `Merci pour votre réponse. ${responseData[eventKey].maybe} personnes ont répondu « peut-être » pour ${eventName}.`;
+    // Message privé uniquement.
+    thankYou.textContent = `Merci ❤️ Votre présence à ${eventName} est bien confirmée.`;
+
+    // Animation.
+    launchConfetti();
+
+    // Ouvre le nouveau popup d'invitation.
+    if (eventKey === "traditional") {
+      openPopup(0);
     }
 
-    const calendarUrl = calendarLinks[eventKey];
-    if (calendarUrl) {
-      window.open(calendarUrl, "_blank", "noopener,noreferrer");
+    if (eventKey === "ceremony") {
+      openPopup(1);
     }
 
-    saveResponseData(responseData);
-    updateResponseSummary(eventCard, eventKey);
+    // Cache le bouton après réponse.
     thankYou.style.display = "block";
+
     responseButtons.forEach((item) => {
       item.disabled = true;
     });
