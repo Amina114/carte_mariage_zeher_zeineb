@@ -35,7 +35,6 @@ function createPopupMarkup(index) {
         <p class="popup-description">${content.description}</p>
         <div class="popup-actions">
           <a class="popup-link primary" href="${content.calendarUrl}" target="_blank" rel="noopener noreferrer">${content.calendarLabel}</a>
-          <a class="popup-link secondary" href="${content.icsUrl}" target="_blank" rel="noopener noreferrer">${content.icsLabel}</a>
           <a class="popup-link tertiary" href="${content.downloadUrl}" download>${content.downloadLabel}</a>
         </div>
       </div>
