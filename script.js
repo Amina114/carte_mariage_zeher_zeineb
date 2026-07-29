@@ -52,7 +52,7 @@ function createHeart() {
 setInterval(createHeart, 700);
 
 // Remplace l'URL par ton URL Web App Apps Script déployé pour écrire dans Google Sheets.
-const sheetWebhookUrl = "https://script.google.com/macros/s/AKfycbyQumYCRKWNN4hJ7BzPX5GfRpAaK8lDxCRBie08j9xzAhGdXmuATUBu0RIEhJh3Wa0TeQ/exec";
+const sheetWebhookUrl = "https://script.google.com/macros/s/AKfycbyByIdHzEvOvot20uhnnW5RwybYuETBOOGfcStqg71dS7TATM5JDZQInq2CZpYsN8RC/exec";
 
 function saveLocalRsvpCount(eventKey) {
   const storageKey = "weddingRsvpCounts";
