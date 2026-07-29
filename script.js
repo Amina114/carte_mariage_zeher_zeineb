@@ -51,22 +51,54 @@ function createHeart() {
 
 setInterval(createHeart, 700);
 
-// Si tu veux envoyer les clics vers Google Sheets, remplace l'URL par ton script Apps Script déployé.
-const sheetWebhookUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+// Remplace l'URL par ton URL Web App Apps Script déployé pour écrire dans Google Sheets.
+const sheetWebhookUrl = "https://script.google.com/macros/s/AKfycbyQumYCRKWNN4hJ7BzPX5GfRpAaK8lDxCRBie08j9xzAhGdXmuATUBu0RIEhJh3Wa0TeQ/exec";
+
+function saveLocalRsvpCount(eventKey) {
+  const storageKey = "weddingRsvpCounts";
+  const counts = JSON.parse(localStorage.getItem(storageKey) || "{}");
+  counts[eventKey] = (counts[eventKey] || 0) + 1;
+  localStorage.setItem(storageKey, JSON.stringify(counts));
+  console.warn(
+    "Google Sheets update skipped. RSVP count saved locally because the page is loaded from file:// or null origin.",
+    counts
+  );
+}
 
 function sendSheetUpdate(eventKey) {
   if (!sheetWebhookUrl || sheetWebhookUrl.includes("YOUR_SCRIPT_ID")) {
     return;
   }
 
+  if (location.protocol === "file:" || location.origin === "null") {
+    saveLocalRsvpCount(eventKey);
+    return;
+  }
+
+  const formData = new URLSearchParams();
+  formData.set("event", eventKey);
+
   fetch(sheetWebhookUrl, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ event: eventKey }),
-    keepalive: true,
-  }).catch(() => {
-    // Ne pas gêner l'utilisateur si l'envoi échoue.
-  });
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+    },
+    body: formData.toString(),
+    mode: "cors",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Sheet update failed (${response.status})`);
+      }
+      return response.text();
+    })
+    .then((text) => {
+      console.log("Sheet update response:", text);
+    })
+    .catch((error) => {
+      console.warn("Google Sheets POST failed:", error);
+      saveLocalRsvpCount(eventKey);
+    });
 }
 
 // Confirmation de participation pour chaque événement.

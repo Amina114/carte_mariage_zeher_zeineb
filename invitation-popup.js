@@ -10,6 +10,7 @@ const popupContent = [
     startDate: "20260821T140000",
     endDate: "20260821T220000",
     downloadUrl: "nzoul.jpeg",
+    downloadName: "traditionnelle.jpeg",
   },
   {
     title: "Invitation à la cérémonie de mariage",
@@ -22,6 +23,7 @@ const popupContent = [
     startDate: "20260824T170000",
     endDate: "20260824T230000",
     downloadUrl: "3ers.jpeg",
+    downloadName: "ceremonie.jpeg",
   },
 ];
 
@@ -95,7 +97,7 @@ function downloadInvitationJPG() {
 
   const link = document.createElement("a");
   link.href = currentEvent.downloadUrl;
-  link.download = currentEvent.downloadUrl.split("/").pop();
+  link.download = currentEvent.downloadName || currentEvent.downloadUrl.split("/").pop();
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
