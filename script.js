@@ -51,6 +51,24 @@ function createHeart() {
 
 setInterval(createHeart, 700);
 
+// Si tu veux envoyer les clics vers Google Sheets, remplace l'URL par ton script Apps Script déployé.
+const sheetWebhookUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+
+function sendSheetUpdate(eventKey) {
+  if (!sheetWebhookUrl || sheetWebhookUrl.includes("YOUR_SCRIPT_ID")) {
+    return;
+  }
+
+  fetch(sheetWebhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ event: eventKey }),
+    keepalive: true,
+  }).catch(() => {
+    // Ne pas gêner l'utilisateur si l'envoi échoue.
+  });
+}
+
 // Confirmation de participation pour chaque événement.
 document.querySelectorAll(".rsvp-btn").forEach((button) => {
   button.addEventListener("click", () => {
@@ -74,6 +92,9 @@ document.querySelectorAll(".rsvp-btn").forEach((button) => {
     if (eventKey === "ceremony") {
       openPopup(1);
     }
+
+    // Envoie le clic au Google Sheet via Apps Script.
+    sendSheetUpdate(eventKey);
 
     // Cache le bouton après réponse.
     thankYou.style.display = "block";
